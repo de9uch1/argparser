@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "argparser"
+version = "0.1.0"
+description = "Argument parser for shell script"
+authors = ["Hiroyuki Deguchi <deguchi.hiroyuki.db0@is.naist.jp>"]
+license = "MIT"
+readme = "README.rst"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.scripts]
+argparser = "argparser.__main__:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
