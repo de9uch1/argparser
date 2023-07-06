@@ -52,6 +52,7 @@ EAMPLE
 If the above script is executed with this following command line,
 
 .. code:: bash
+
    ./script.sh --file log.txt --num-workers 16 -u 100 200 --experimental --lang ja
 
 The variables in the script will be set to:
