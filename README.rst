@@ -23,7 +23,7 @@ USAGE
 3. The second positional argument, --long/-l and --short/-s options will be
    command line argument names.
 4. Other arguments of :code:`argparser add` can be shown by :code:`argparser add --help`.
-5. :code:`eval $(add_args | argparser parse $@)` parses command line arguments.
+5. :code:`eval $(add_args | argparser parse "$@")` parses command line arguments.
 
 The parser is based on `argparse.ArgumentParser <https://docs.python.org/3/library/argparse.html>`_ from Python.
 
@@ -41,7 +41,7 @@ EAMPLE
        argparser add BETA     -l experimental      --action store_true
        argparser add LANGUAGE -l lang              --choices en de ja
    }
-   eval $(add_args | argparser parse $@)
+   eval $(add_args | argparser parse "$@")
 
    echo $FILE
    echo $WORKERS
@@ -49,11 +49,9 @@ EAMPLE
    $BETA && echo T || echo F
    echo $LANGUAGE
 
-If the above script is executed with this following command line,
+.. code:: shell
 
-.. code:: bash
-
-   ./script.sh log.txt --num-workers 16 -u 100 200 --experimental --lang ja
+   $ ./script.sh log.txt --num-workers 16 -u 100 200 --experimental --lang ja
 
 The variables in the script will be set to:
 

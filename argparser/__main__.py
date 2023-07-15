@@ -112,7 +112,7 @@ USAGE:
     3. The second positional argument, --long/-l and --short/-s options will be
        command line argument names.
     4. Other arguments of `argparser add` can be shown by `argparser add --help`.
-    5. `eval $(add_args | argparser parse $@)` parses command line arguments.
+    5. `eval $(add_args | argparser parse "$@")` parses command line arguments.
 
 EAMPLE:
     --------------------------------------------------------
@@ -127,11 +127,10 @@ EAMPLE:
         argparser add LANGUAGE -l lang              --choices en de ja
     }
 
-    eval $(add_args | argparser parse $@)
+    eval $(add_args | argparser parse "$@")
     --------------------------------------------------------
 
-    If the above script is executed with this following command line,
-        ./test.sh --file log.txt --num-workers 16 -u 100 200 --experimental --lang ja
+    $ ./test.sh --file log.txt --num-workers 16 -u 100 200 --experimental --lang ja
 
     The variables in the script will be set to:
         - FILE=log.txt
