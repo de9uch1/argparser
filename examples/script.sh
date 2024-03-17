@@ -3,7 +3,7 @@
 set -eu
 
 function add_args() {
-    argparser setup $0 "Test script."
+    argparser setup --prog "$0" --desc "Test script."
     argparser add FILE        file
     argparser add WORKERS  -l num-workers  -s n --type int --default 8
     argparser add USER_IDS -l user-ids     -s u --type int --nargs "*"

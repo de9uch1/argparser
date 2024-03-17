@@ -8,8 +8,7 @@ import pytest
 @pytest.mark.parametrize("desc", ["This is a description.", ""])
 @pytest.mark.parametrize("epilog", ["This is a epilog.", ""])
 def test_setup(capfd: pytest.CaptureFixture, prog: str, desc: str, epilog: str):
-
-    argparser.app.main(["setup", prog, desc, epilog])
+    argparser.app.main(["setup", "--prog", prog, "--desc", desc, "--epilog", epilog])
     out, err = capfd.readouterr()
 
     expected = {"__metatype": "setup"}

@@ -65,6 +65,8 @@ def test_add(
         expected["help"] = desc[1]
     if type:
         expected["type"] = type[1]
+    else:
+        expected["type"] = "str"
     if default:
         expected["default"] = default[1]
     if nargs:

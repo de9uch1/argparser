@@ -5,7 +5,6 @@ import sys
 from argparse import ArgumentParser, Namespace
 from typing import Any, Dict, Optional, Sequence
 
-
 class ArgumentParserWrapper(ArgumentParser):
     def _print_message(self, message, file=None):
         if message:
@@ -63,6 +62,8 @@ def add(args: Namespace):
         parser_args["help"] = args.desc
     if args.type:
         parser_args["type"] = args.type
+    else:
+        parser_args["type"] = "str"
     if args.default:
         parser_args["default"] = args.default
     if args.nargs:
@@ -123,6 +124,7 @@ def parse(args):
                     item["type"] = strtobool
                 else:
                     item["type"] = item_type
+
             if "default" in item and "type" in item:
                 item["default"] = item["type"](item["default"])
                 if "help" not in item:
@@ -162,7 +164,7 @@ EAMPLE:
     #!/bin/bash
 
     function add_args() {
-        argparser setup $0 "Test script."
+        argparser setup --prog "$0" --desc "Test script."
         argparser add FILE        file
         argparser add WORKERS  -l num-workers  -s n --type int --default 8
         argparser add USER_IDS -l user-ids     -s u --type int --nargs "*"
@@ -202,11 +204,11 @@ def main(argv: Optional[Sequence[str]] = None):
         "setup", help="Setup a header and footer of the help message."
     )
     # fmt: off
-    setup_parser.add_argument("prog", type=str, nargs="?",
+    setup_parser.add_argument("--prog", type=str,
                             help="Program name. Usually $0 should be given.")
-    setup_parser.add_argument("desc", type=str, nargs="?",
+    setup_parser.add_argument("--desc", type=str,
                             help="Description.")
-    setup_parser.add_argument("epilog", type=str, nargs="?",
+    setup_parser.add_argument("--epilog", type=str,
                             help="Epilog.")
     # fmt: on
     setup_parser.set_defaults(func=setup)
@@ -242,7 +244,7 @@ def main(argv: Optional[Sequence[str]] = None):
         "parse",
         add_help=False,
         help="Parse command line arguments. "
-        "This subcommand is only called by `eval $(add_args | argparser parse $@)` "
+        'This subcommand is only called by `eval $(add_args | argparser parse "$@")` '
         "in a shell script with a defined `add_args()` function. "
         "See an example by `argparser help`.",
     )
