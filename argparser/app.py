@@ -104,14 +104,25 @@ def parse(args):
             for k in ["flags", "varname", "__metatype"]:
                 del item[k]
 
+            if item.get("action", "") == "store_true":
+                item["default"] = False
+                if "type" in item:
+                    del item["type"]
+                if "help" not in item:
+                    item["help"] = " "
+            if item.get("action", "") == "store_false":
+                item["default"] = True
+                if "type" in item:
+                    del item["type"]
+                if "help" not in item:
+                    item["help"] = " "
+
             if "type" in item:
                 item_type = eval(item["type"])
-                if item_type is bool and item.get("action", None) not in {
-                    "store_true",
-                    "store_false",
-                }:
-                    item_type = strtobool
-                item["type"] = item_type
+                if item_type is bool:
+                    item["type"] = strtobool
+                else:
+                    item["type"] = item_type
             if "default" in item and "type" in item:
                 item["default"] = item["type"](item["default"])
                 if "help" not in item:
